@@ -3,6 +3,14 @@ from django.utils import timezone
 from django.core.validators import FileExtensionValidator
 # Create your models here.
 
+def fetch_userid():
+    try:
+        user_id = PersonalDetails.objects.latest('id')
+    except:
+        return None
+
+    return user_id.id
+
 class Tag(models.Model):
     tag_name = models.CharField(max_length=30)
     is_active = models.BooleanField(default=True)
@@ -113,10 +121,9 @@ class EducationalDetails(models.Model):
     This model Contains Users Educational Details
     """
     def fetch_userid():
-        user_id = PersonalDetails.objects.latest('id')
-        return user_id.id
+        return fetch_userid()
 
-    user_id = models.ForeignKey(PersonalDetails,default=fetch_userid,related_name='educational',on_delete=models.SET_DEFAULT)
+    user_id = models.ForeignKey(PersonalDetails,default=fetch_userid,related_name='educational',on_delete=models.SET_DEFAULT, null=True)
     degree = models.ForeignKey(Degree,null=True,on_delete=models.SET_NULL)
     yr_of_passing = models.CharField(max_length=20)
     school = models.CharField(max_length=100)
@@ -127,10 +134,10 @@ class CertificateDetails(models.Model):
     This model Contains Users Certificate Details
     """
     def fetch_userid():
-        user_id = PersonalDetails.objects.latest('id')
-        return user_id.id
+        return fetch_userid()
 
-    user_id = models.ForeignKey(PersonalDetails,default=fetch_userid,related_name='certificate',on_delete=models.SET_DEFAULT)
+
+    user_id = models.ForeignKey(PersonalDetails,default=fetch_userid,related_name='certificate',on_delete=models.SET_DEFAULT, null=True)
     certificate_name = models.CharField(max_length=75)
     yr_of_certificate = models.CharField(max_length=20)
     created_at  = models.DateTimeField(default=timezone.now)
@@ -140,10 +147,9 @@ class WorkDetails(models.Model):
     This model Contains user Work Experience Details
     """
     def fetch_userid():
-        user_id = PersonalDetails.objects.latest('id')
-        return user_id.id
+        return fetch_userid()
 
-    user_id = models.ForeignKey(PersonalDetails,default=fetch_userid,related_name='work',on_delete=models.SET_DEFAULT)
+    user_id = models.ForeignKey(PersonalDetails,default=fetch_userid,related_name='work',on_delete=models.SET_DEFAULT, null=True)
     skills_id = models.ForeignKey(Skills,null=True,on_delete=models.SET_NULL)
     year_exp_id = models.ForeignKey(YearsOfExp,null=True,on_delete=models.SET_NULL)
     created_at  = models.DateTimeField(default=timezone.now)
@@ -154,10 +160,9 @@ class EmploymentHistory(models.Model):
     This model Contains Employment History Details
     """
     def fetch_userid():
-        user_id = PersonalDetails.objects.latest('id')
-        return user_id.id
+        return fetch_userid()
 
-    user_id = models.ForeignKey(PersonalDetails,default=fetch_userid,related_name='employement',on_delete=models.SET_DEFAULT)
+    user_id = models.ForeignKey(PersonalDetails,default=fetch_userid,related_name='employement',on_delete=models.SET_DEFAULT, null=True)
     job_title = models.CharField(max_length=80)
     employer  = models.CharField(max_length=80)
     city      = models.CharField(max_length=80)
@@ -172,10 +177,9 @@ class AwardsDetails(models.Model):
     This model Contains user awards Details
     """
     def fetch_userid():
-        user_id = PersonalDetails.objects.latest('id')
-        return user_id.id
+        return fetch_userid()
 
-    user_id = models.ForeignKey(PersonalDetails,default=fetch_userid,related_name='awards',on_delete=models.SET_DEFAULT)
+    user_id = models.ForeignKey(PersonalDetails,default=fetch_userid,related_name='awards',on_delete=models.SET_DEFAULT,  null=True)
     award_name = models.CharField(max_length=255)
     award_org  = models.CharField(max_length=255)
     created_at  = models.DateTimeField(default=timezone.now)
@@ -186,10 +190,9 @@ class PreferencesDetails(models.Model):
     This model Contains user preference Details
     """
     def fetch_userid():
-        user_id = PersonalDetails.objects.latest('id')
-        return user_id.id
+        return fetch_userid()
 
-    user_id = models.ForeignKey(PersonalDetails,default=fetch_userid,related_name='preference',on_delete=models.SET_DEFAULT)
+    user_id = models.ForeignKey(PersonalDetails,default=fetch_userid,related_name='preference',on_delete=models.SET_DEFAULT,  null=True)
     country_id = models.ForeignKey(Country,null=True,on_delete=models.SET_NULL)
     industry_id  = models.ForeignKey(Industries,null=True,on_delete=models.SET_NULL)
     position  = models.CharField(null=True,max_length=80)
