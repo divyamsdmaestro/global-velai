@@ -1,0 +1,7 @@
+Django==4.1.4
+djangorestframework==3.14.0
+django-filter==22.1
+html5lib==1.1
+fpdf==1.7.2
+reportlab==3.6.12
+xhtml2pdf==0.2.8
